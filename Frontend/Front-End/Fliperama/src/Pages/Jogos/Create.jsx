@@ -4,16 +4,16 @@ import Api from '../../Api/Api'
 
 export default function Create() {
 	const [nome, setNome] = useState('')
-	const [valor, setValor] = useState('')
-	const [gamegen, setGamegen] = useState('')
+	const [valor, setValor] = useState(0.0)
+	const [game_gen, setGamegen] = useState('')
 	const [img, setImg] = useState('')
-	const [id, setId] = useState(0)
+	const { id } = useParams()
 	const navigate = useNavigate()
 
 	const criarOuEditarJogo = (e) => {
 		e.preventDefault()
 
-		const jogo = { id, nome, valor, gamegen, img }
+		const jogo = { id, nome, valor, game_gen, img }
 
 		if (id) {
 			Api.put('/jogos/' + id, jogo).then((response) => {
@@ -29,12 +29,12 @@ export default function Create() {
 	useEffect(() => {
 		function getJogoById() {
 			if (id) {
-				Api.get(`/jogos/${id}`)
+				Api.get(`/Jogos/${id}`)
 					.then((response) => {
-						setId(response.data.id)
 						setNome(response.data.nome)
-						setGamegen(response.data.gamegen)
+						setGamegen(response.data.gameGen)
 						setValor(response.data.valor)
+						setImg(response.data.img)
 					})
 					.catch((error) => {
 						console.log(error)
@@ -51,18 +51,6 @@ export default function Create() {
 					<legend>
 						<h2 className="text-center">{id ? 'Editar' : 'Criar'}</h2>
 					</legend>
-					<div className="mb-3">
-						<div className="align">
-							<input
-								type="number"
-								id="Id"
-								className="form-control s"
-								placeholder="ID"
-								value={id}
-								onChange={(e) => setId(Number.parseInt(e.target.value))}
-							/>
-						</div>
-					</div>
 					<div className="mb-3">
 						<div className="align">
 							<input
@@ -94,7 +82,7 @@ export default function Create() {
 								id="Gamegen"
 								className="form-control s"
 								placeholder="Gênero"
-								value={gamegen}
+								value={game_gen}
 								onChange={(e) => setGamegen(e.target.value)}
 							/>
 						</div>
@@ -111,22 +99,22 @@ export default function Create() {
 							/>
 						</div>
 					</div>
-          <div className="d-flex justify-content-center">
-					<button
-						type="submit"
-						className="btn btn-primary"
-						onClick={(e) => criarOuEditarJogo(e)}
-					>
-						Enviar
-					</button>
-					<Link
-						to="/Destinos"
-						className="btn btn-danger"
-						style={{ marginLeft: '10px' }}
-					>
-						Cancelar
-					</Link>
-          </div>
+					<div className="d-flex justify-content-center">
+						<button
+							type="submit"
+							className="btn btn-primary"
+							onClick={(e) => criarOuEditarJogo(e)}
+						>
+							Enviar
+						</button>
+						<Link
+							to="/Jogos"
+							className="btn btn-danger"
+							style={{ marginLeft: '10px' }}
+						>
+							Cancelar
+						</Link>
+					</div>
 				</fieldset>
 			</form>
 		</div>

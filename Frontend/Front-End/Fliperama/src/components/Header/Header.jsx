@@ -20,7 +20,7 @@ function Header() {
 				</label>
 				<ul className="menu">
 					<li>
-						<NavLink activeClassName="active" to="/">
+						<NavLink active ClassName="active" to="/">
 							Home
 						</NavLink>
 					</li>

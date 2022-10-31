@@ -4,7 +4,7 @@ import Api from '../../Api/Api'
 
 export default function Create() {
 	const [nome, setNome] = useState('')
-	const [jogo, setJogo] = useState({ id: 0 })
+	const [jogo, setJogo] = useState({ id: 0, nome: '' })
 	const [jogos, setJogos] = useState([])
 	const { id } = useParams()
 	const navigate = useNavigate()
@@ -22,7 +22,7 @@ export default function Create() {
 	const criarOuEditarSala = (e) => {
 		e.preventDefault()
 
-		const sala = { nome, jogo }
+		const sala = { id, nome, jogo }
 
 		if (id) {
 			Api.put('/salas/' + id, sala).then((response) => {
@@ -43,6 +43,7 @@ export default function Create() {
 						setNome(response.data.nome)
 						setJogo({
 							id: response.data.jogo.id,
+							nome: response.data.jogo.nome,
 						})
 					})
 					.catch((error) => {
@@ -80,7 +81,10 @@ export default function Create() {
 								name="JogoId_jogo"
 								className="form-select s"
 								onChange={(e) =>
-									setJogo({ id: Number.parseInt(e.target.value) })
+									setJogo({
+										id: Number.parseInt(e.target.value),
+										nome: e.target.value,
+									})
 								}
 							>
 								<option value="DEFAULT">
@@ -94,22 +98,22 @@ export default function Create() {
 							</select>
 						</div>
 					</div>
-          <div className="d-grid-sm d-flex justify-content-center">
-					<button
-						type="submit"
-						className="btn btn-primary"
-						onClick={(e) => criarOuEditarSala(e)}
-					>
-						Enviar
-					</button>
-					<Link
-						to="/Salas"
-						className="btn btn-danger"
-						style={{ marginLeft: '10px' }}
-					>
-						Cancelar
-					</Link>
-          </div>
+					<div className="d-grid-sm d-flex justify-content-center">
+						<button
+							type="submit"
+							className="btn btn-primary"
+							onClick={(e) => criarOuEditarSala(e)}
+						>
+							Enviar
+						</button>
+						<Link
+							to="/Salas"
+							className="btn btn-danger"
+							style={{ marginLeft: '10px' }}
+						>
+							Cancelar
+						</Link>
+					</div>
 				</fieldset>
 			</form>
 		</div>

@@ -12,6 +12,10 @@ html,body {
   max-width: 50%;
  }
 
+ .tColor {
+  color: #5c5f82;
+ }
+
 .align {
   display: flex;
   justify-content: center;
